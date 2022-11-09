@@ -6,45 +6,43 @@ interface FlightDoc extends Document {
   to: string;
   date: string;
   airline: string;
-  fromTime: string;
-  toTime: string;
-  user: {
-    type: Schema.Types.ObjectId;
-    ref: 'User';
-  };
-  group: string;
-  passengerCount: number;
-  passengers: string[];
+//   group: string;
+//   passengerCount: number;
+//   passengers: string[];
   price: number;
 }
 
 const flightSchema = new mongoose.Schema<FlightDoc>({
-  name: {
+  from: {
     type: String,
     required: true,
     trim: true,
   },
-  email: {
+  to: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
-    lowercase: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error('Invalid email');
-      }
-    },
   },
-  isEmailVerified: {
-    type: Boolean,
-    default: false,
+  date: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  airline: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  price: {
+    type: String,
+    required: true,
+    trim: true,
   },
 });
 
 /**
  * @typedef Flight
  */
-const User = mongoose.model('Flight', flightSchema);
+const Flight = mongoose.model('Flight', flightSchema);
 
-export default User;
+export default Flight;
