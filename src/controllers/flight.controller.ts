@@ -16,4 +16,12 @@ const getFlights = catchAsync(async (req: Request, res: Response) => {
   res.send(result);
 });
 
-export default { bookFlight, getFlights };
+const getFlight = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.getFlightById(req.params.flightId);
+  if (!flight) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Flight not found');
+  }
+  res.send(flight);
+});
+
+export default { bookFlight, getFlights, getFlight };

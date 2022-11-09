@@ -9,4 +9,8 @@ const queryFlights = async (filter, options) => {
   return flights;
 };
 
-export default { bookFlight, queryFlights };
+const getFlightById = async (id: string) => {
+  return Flight.findById(id);
+};
+
+export default { bookFlight, queryFlights, getFlightById };
