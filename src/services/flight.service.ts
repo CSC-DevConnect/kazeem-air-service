@@ -57,6 +57,18 @@ const createOfferRequest = async (body: any): Promise<any> => {
 
 /*
 |-----------------------------------------------------------------------
+| List offer requests
+|------------------------------------------------------------------------
+*/
+const getOfferRequests = async () => {
+  const url = `${process.env.DUFFEL_BASE_URL}/offer_requests`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const offerRequests = await http.getRequest(url, token);
+  return offerRequests;
+};
+
+/*
+|-----------------------------------------------------------------------
 | Get all airlines
 |------------------------------------------------------------------------
 */
@@ -110,4 +122,4 @@ const getAirports = async (countryCode?: any) => {
   return airports;
 };
 
-export default { getAirlines, getAirports, createOfferRequest, createOffer };
+export default { getAirlines, getAirports, createOfferRequest, getOfferRequests, createOffer };

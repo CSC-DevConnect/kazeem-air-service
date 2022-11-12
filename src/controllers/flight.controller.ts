@@ -28,6 +28,16 @@ const createOfferRequest = catchAsync(async (req: Request, res: Response) => {
 | Get all airlines
 |------------------------------------------------------------------------
 */
+const getOfferRequests = catchAsync(async (req: Request, res: Response) => {
+  const result = await flightService.getOfferRequests();
+  res.send(result);
+});
+
+/*
+|-----------------------------------------------------------------------
+| Get all airlines
+|------------------------------------------------------------------------
+*/
 const getAirlines = catchAsync(async (req: Request, res: Response) => {
   const result = await flightService.getAirlines();
   res.send(result);
@@ -45,4 +55,4 @@ const getAirports = catchAsync(async (req: Request, res: Response) => {
 });
 
 
-export default { getAirlines, getAirports, createOfferRequest };
+export default { getAirlines, getAirports, createOfferRequest, getOfferRequests };
