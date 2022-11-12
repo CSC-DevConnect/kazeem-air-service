@@ -14,9 +14,7 @@ const http = new HttpRequest;
 |------------------------------------------------------------------------
 */
 const createOfferRequest = async (body: any): Promise<any> => {
-  const url = `${process.env.DUFFEL_BASE_URL}/offer_requests`;
-  const token = process.env.DUFFEL_ACCESS_TOKEN;
-  const data = {
+  const data: any = {
     "slices": [
       {
         "origin": 'LHR',
@@ -33,26 +31,10 @@ const createOfferRequest = async (body: any): Promise<any> => {
     "cabin_class": null
   }
 
-  const offers = await http.postRequest(url, data, token);
-  // const offerRequest = await duffel.offerRequests.create({
-  //   "slices": [
-  //     {
-  //       "origin": 'LHR',
-  //       "destination": 'JFK',
-  //       "departure_date": "2023-05-12T14:59:49.547Z"
-  //     },
-  //     {
-  //       "origin": 'JFK',
-  //       "destination": 'LHR',
-  //       "departure_date": "2023-05-20T14:59:49.547Z"
-  //     },
-  //   ],
-  //   "passengers": [{ "type": "adult" }],
-  //   "cabin_class": null
-  // })
+  const offerRequest = await duffel.offerRequests.create(data)
   
   // const offers = await duffel.offers.list()
-  return offers;
+  return offerRequest.data;
 };
 
 /*
