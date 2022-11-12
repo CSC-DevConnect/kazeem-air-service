@@ -13,6 +13,11 @@ const getAirlines = catchAsync(async (req: Request, res: Response) => {
   res.send(result);
 });
 
+const getAirports = catchAsync(async (req: Request, res: Response) => {
+  const result = await flightService.getAirports(req.params.countryCode);
+  res.send(result);
+});
+
 // const getFlight = catchAsync(async (req: Request, res: Response) => {
 //   const flight = await flightService.getFlightById(req.params.flightId);
 //   if (!flight) {
@@ -21,4 +26,4 @@ const getAirlines = catchAsync(async (req: Request, res: Response) => {
 //   res.send(flight);
 // });
 
-export default { bookFlight, getAirlines };
+export default { bookFlight, getAirlines, getAirports };
