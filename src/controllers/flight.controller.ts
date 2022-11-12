@@ -28,6 +28,16 @@ const createOfferRequest = catchAsync(async (req: Request, res: Response) => {
 | Get all airlines
 |------------------------------------------------------------------------
 */
+const createTwoWayOfferRequest = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.createTwoWayOfferRequest(req.body);
+  res.status(httpStatus.CREATED).send({ flight });
+});
+
+/*
+|-----------------------------------------------------------------------
+| Get all airlines
+|------------------------------------------------------------------------
+*/
 const getOfferRequests = catchAsync(async (req: Request, res: Response) => {
   const result = await flightService.getOfferRequests();
   res.send(result);
@@ -55,4 +65,4 @@ const getAirports = catchAsync(async (req: Request, res: Response) => {
 });
 
 
-export default { getAirlines, getAirports, createOfferRequest, getOfferRequests };
+export default { getAirlines, getAirports, createOfferRequest, createTwoWayOfferRequest, getOfferRequests };

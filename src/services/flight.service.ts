@@ -6,35 +6,69 @@ import duffel from '../config/duffel';
 | HttpRequest Instance
 |------------------------------------------------------------------------
 */
-const http = new HttpRequest;
+const http = new HttpRequest();
 
 /*
 |-----------------------------------------------------------------------
-| Get all airlines
+| Create one way offer request
 |------------------------------------------------------------------------
 */
 const createOfferRequest = async (body: any): Promise<any> => {
-  const data: any = {
-    "slices": [
+  const { cabin_class, origin, destination, departure_date } = body;
+  const payload: any = {
+    return_offers: false,
+    supplier_timeout: 20000,
+    slices: [
       {
-        "origin": 'LHR',
-        "destination": 'JFK',
-        "departure_date": "2023-05-12T14:59:49.547Z"
-      },
-      {
-        "origin": 'JFK',
-        "destination": 'LHR',
-        "departure_date": "2023-05-20T14:59:49.547Z"
+        origin,
+        destination,
+        departure_date,
       },
     ],
-    "passengers": [{ "type": "adult" }],
-    "cabin_class": null
-  }
+    passengers: [{ type: 'adult' }],
+    cabin_class,
+  };
 
-  const offerRequest = await duffel.offerRequests.create(data)
-  
-  // const offers = await duffel.offers.list()
-  return offerRequest.data;
+  const offerRequest = await duffel.offerRequests.create(payload);
+  const url = `${process.env.DUFFEL_BASE_URL}/offer_requests/${offerRequest.data.id}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const offers = await http.getRequest(url, token);
+
+  return offers.data.offers.slice(0, 5);
+};
+
+/*
+|-----------------------------------------------------------------------
+| Create two way offer request
+|------------------------------------------------------------------------
+*/
+const createTwoWayOfferRequest = async (body: any): Promise<any> => {
+  const { cabin_class, origin, destination, departure_date, return_origin, return_destination, return_departure_date } = body;
+  const payload: any = {
+    return_offers: false,
+    supplier_timeout: 20000,
+    slices: [
+      {
+        origin,
+        destination,
+        departure_date,
+      },
+      {
+        origin: return_origin,
+        destination: return_destination,
+        departure_date: return_departure_date,
+      },
+    ],
+    passengers: [{ type: 'adult' }],
+    cabin_class,
+  };
+
+  const offerRequest = await duffel.offerRequests.create(payload);
+  const url = `${process.env.DUFFEL_BASE_URL}/offer_requests/${offerRequest.data.id}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const offers = await http.getRequest(url, token);
+
+  return offers.data.offers.slice(0, 5);
 };
 
 /*
@@ -104,4 +138,4 @@ const getAirports = async (countryCode?: any) => {
   return airports;
 };
 
-export default { getAirlines, getAirports, createOfferRequest, getOfferRequests, createOffer };
+export default { getAirlines, getAirports, createOfferRequest, createTwoWayOfferRequest, getOfferRequests, createOffer };

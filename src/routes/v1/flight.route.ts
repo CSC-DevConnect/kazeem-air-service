@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/airlines', flightController.getAirlines);
 router.get('/airports', flightController.getAirports);
 router.post('/offer', flightController.createOfferRequest);
+router.post('/two_way_offer', flightController.createTwoWayOfferRequest);
 router.get('/offer_requests', flightController.getOfferRequests);
 // router.route('/:flightId').get(auth('getFlight'), flightController.getFlight);
 
