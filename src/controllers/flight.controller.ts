@@ -8,14 +8,21 @@ const bookFlight = catchAsync(async (req: Request, res: Response) => {
   res.status(httpStatus.CREATED).send({ flight });
 });
 
+const createOfferRequest = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.createOfferRequest(req.body);
+  res.status(httpStatus.CREATED).send({ flight });
+});
+
+
+
 const getAirlines = catchAsync(async (req: Request, res: Response) => {
   const result = await flightService.getAirlines();
   res.send(result);
 });
 
 const getAirports = catchAsync(async (req: Request, res: Response) => {
-  const { countryCode, limit } = req.query;
-  const result = await flightService.getAirports(countryCode, limit);
+  const { countryCode } = req.query;
+  const result = await flightService.getAirports(countryCode);
   res.send(result);
 });
 
@@ -27,4 +34,4 @@ const getAirports = catchAsync(async (req: Request, res: Response) => {
 //   res.send(flight);
 // });
 
-export default { bookFlight, getAirlines, getAirports };
+export default { bookFlight, getAirlines, getAirports, createOfferRequest };

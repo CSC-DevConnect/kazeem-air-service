@@ -10,6 +10,7 @@ class HttpRequest {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
+          'Duffel-Version': 'beta',
           charset: 'utf-8',
         },
       });
