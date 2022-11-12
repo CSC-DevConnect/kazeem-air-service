@@ -14,7 +14,8 @@ const getAirlines = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAirports = catchAsync(async (req: Request, res: Response) => {
-  const result = await flightService.getAirports(req.params.countryCode);
+  const { countryCode, limit } = req.query;
+  const result = await flightService.getAirports(countryCode, limit);
   res.send(result);
 });
 

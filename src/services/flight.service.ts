@@ -1,5 +1,8 @@
+import HttpRequest from '../utils/httpRequest';
 import duffel from '../config/duffel';
 import Flight from '../models/flight.model';
+
+const http = new HttpRequest;
 
 const bookFlight = async (body: any): Promise<any> => {
   return Flight.create(body);
@@ -55,12 +58,16 @@ const createOffer = async (body) => {
 };
 
 const getAirlines = async () => {
-  const airlines = duffel.airlines.list();
+  const url = `${process.env.DUFFEL_BASE_URL}/airlines`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const airlines = await http.getRequest(url, token);
   return airlines;
 };
 
-const getAirports = async (countryCode: any, limit: number) => {
-  const airports = await axios.get(`https://api.duffel.com/air/airports?limit=${limit}&iata_country_code=${countryCode}`);
+const getAirports = async (countryCode: string, limit: any) => {
+  const url = `${process.env.DUFFEL_BASE_URL}/airports?limit=${limit}&iata_country_code=${countryCode}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const airports = await http.getRequest(url, token);
   return airports;
 };
 

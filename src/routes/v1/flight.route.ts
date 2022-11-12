@@ -7,7 +7,7 @@ const router = express.Router();
 
 // router.route('/').post(auth('bookFlight'), flightController.bookFlight).get(auth('airlines'), flightController.getAirlines);
 router.get('/airlines', flightController.getAirlines);
-router.get('/airports:countryCode', flightController.getAirports);
+router.get('/airports', flightController.getAirports);
 // router.route('/:flightId').get(auth('getFlight'), flightController.getFlight);
 
 export default router;
