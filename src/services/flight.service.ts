@@ -1,4 +1,4 @@
-import duffel from 'src/config/duffel';
+import duffel from '../config/duffel';
 import Flight from '../models/flight.model';
 
 const bookFlight = async (body: any): Promise<any> => {
@@ -6,7 +6,7 @@ const bookFlight = async (body: any): Promise<any> => {
 };
 
 const createOfferRequest = async (body: any): Promise<any> => {
-  const offerRequest = await duffel.offerRequests.create({
+  const offerRequest: any = await duffel.offerRequests.create({
     "slices": [
       {
         "origin": 'LHR',
@@ -23,12 +23,12 @@ const createOfferRequest = async (body: any): Promise<any> => {
     "cabin_class": null
   })
   
-  const offers = await duffel.offers.list(offerRequest.data.id);
+  const offers = await duffel.offers.list((offerRequest?.data?.id as any));
 
   return offers;
 };
 
-const createOffer = async (req: Request, res: Response) => {
+const createOffer = async (body) => {
   duffel.orders.create({
     "selected_offers": ["off_0000APUJxQEqcjioVjvAPc"],
     "payments": [
@@ -54,13 +54,13 @@ const createOffer = async (req: Request, res: Response) => {
   })
 }
 
-const queryFlights = async (filter, options) => {
-  const flights = await Flight.find({});
-  return flights;
+const getAirlines = async () => {
+  const airlines = duffel.airlines.list();
+  return airlines;
 };
 
 const getFlightById = async (id: string) => {
   return Flight.findById(id);
 };
 
-export default { bookFlight, queryFlights, getFlightById, createOfferRequest, createOffer };
+export default { bookFlight, getAirlines, getFlightById, createOfferRequest, createOffer };

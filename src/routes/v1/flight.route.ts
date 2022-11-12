@@ -5,7 +5,7 @@ import flightController from '../../controllers/flight.controller';
 
 const router = express.Router();
 
-router.route('/').post(auth('bookFlight'), flightController.bookFlight).get(auth('flights'), flightController.getFlights);
+router.route('/').post(auth('bookFlight'), flightController.bookFlight).get(auth('airlines'), flightController.getAirlines);
 
 router.route('/:flightId').get(auth('getFlight'), flightController.getFlight);
 
