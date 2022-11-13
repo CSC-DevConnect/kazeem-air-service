@@ -9,6 +9,9 @@ const router = express.Router();
 router.get('/airlines', flightController.getAirlines);
 router.get('/airports', flightController.getAirports);
 router.post('/offer', flightController.createOfferRequest);
+router.route("/orders").post(flightController.createOrder).get(flightController.getOrders)
+
+router.route("/orders/:id").get(flightController.getOrder).patch(flightController.updateOrder)
 // router.route('/:flightId').get(auth('getFlight'), flightController.getFlight);
 
 export default router;

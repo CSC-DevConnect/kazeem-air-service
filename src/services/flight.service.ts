@@ -110,4 +110,85 @@ const getAirports = async (countryCode?: any) => {
   return airports;
 };
 
-export default { getAirlines, getAirports, createOfferRequest, createOffer };
+/*  
+|-----------------------------------------------------------------------
+| Create an order
+|------------------------------------------------------------------------
+*/
+
+const createOrder = async (body) => {
+  const {payments, selected_offers, type, services, metadata} = body
+
+  const payload: any = {
+    type,
+    services,
+    selected_offers,
+    passengers: [{ type: 'adult' }],
+    payments,    
+    metadata
+  }
+
+  console.log('payload', payload)
+
+  console.log('body', body)
+
+  const order = await duffel.orders.create(body)
+
+  if (!order) {
+    throw new Error('Invalid request')
+  }
+
+  console.log(order)
+  const url = `${process.env.DUFFEL_BASE_URL}/orders/${order.data.id}`
+  const token = process.env.DUFFEL_ACCESS_TOKEN
+
+  const orders = await http.getRequest(url, token)
+  return orders;
+  }
+
+  /*  
+|-----------------------------------------------------------------------
+| List orders
+|------------------------------------------------------------------------
+*/
+
+const getOrders = async () => {
+  const url = `${process.env.DUFFEL_BASE_URL}/orders`
+  const token = process.env.DUFFEL_ACCESS_TOKEN
+
+  const orders = await http.getRequest(url, token)
+  return orders
+}
+
+  /*  
+|-----------------------------------------------------------------------
+| Get a single order
+|------------------------------------------------------------------------
+*/
+
+const getOrder = async (id) => {
+  const url = `${process.env.DUFFEL_BASE_URL}/orders/${id}`
+  const token = process.env.DUFFEL_ACCESS_TOKEN
+
+  const order = await http.getRequest(url, token)
+  return order
+}
+
+  /*  
+|-----------------------------------------------------------------------
+| Update a single order
+|------------------------------------------------------------------------
+*/
+
+const updateOrder = async (id, body) => {
+  const order = await getOrder(id)
+ 
+
+  const r = Object.assign(order, body)
+   console.log('order', order)
+  console.log('result', r)
+  await order.save()
+  return order
+}
+
+export default { getAirlines, getAirports, createOfferRequest, createOffer, createOrder, getOrders, getOrder, updateOrder };

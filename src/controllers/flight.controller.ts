@@ -44,5 +44,44 @@ const getAirports = catchAsync(async (req: Request, res: Response) => {
   res.send(result);
 });
 
+/*
+|-----------------------------------------------------------------------
+|Create order
+|------------------------------------------------------------------------
+*/
+const createOrder = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.createOrder(req.body);
+  res.status(httpStatus.CREATED).send({ flight });
+});
 
-export default { getAirlines, getAirports, createOfferRequest };
+/*
+|-----------------------------------------------------------------------
+| List of all orders
+|------------------------------------------------------------------------
+*/
+const getOrders = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.getOrders();
+  res.status(httpStatus.CREATED).send({ flight });
+});
+
+/*
+|-----------------------------------------------------------------------
+| Get a single order
+|------------------------------------------------------------------------
+*/
+const getOrder = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.getOrder(req.params.id);
+  res.status(httpStatus.CREATED).send({ flight });
+});
+
+/*
+|-----------------------------------------------------------------------
+| Update a single order
+|------------------------------------------------------------------------
+*/
+const updateOrder = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.updateOrder(req.params.id, req.body);
+  res.status(httpStatus.CREATED).send({ flight });
+});
+
+export default { getAirlines, getAirports, createOfferRequest, createOrder, getOrders, getOrder, updateOrder };
