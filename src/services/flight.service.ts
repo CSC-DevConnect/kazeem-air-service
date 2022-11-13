@@ -89,37 +89,6 @@ const getOfferRequests = async () => {
 | Get all airlines
 |------------------------------------------------------------------------
 */
-const createOffer = async (body) => {
-  duffel.orders.create({
-    selected_offers: ['off_0000APUJxQEqcjioVjvAPc'],
-    payments: [
-      {
-        type: 'balance',
-        currency: 'USD',
-        amount: '566.64',
-      },
-    ],
-    passengers: [
-      {
-        phone_number: '+44 2080160508',
-        email: 'mae@example.com',
-        born_on: '1956-10-17',
-        title: 'ms',
-        gender: 'f',
-        family_name: 'Jemison',
-        given_name: 'Mae',
-        id: 'pas_0000APUJxQ0fTSNZnlHqJS',
-      },
-    ],
-    type: 'instant',
-  });
-};
-
-/*
-|-----------------------------------------------------------------------
-| Get all airlines
-|------------------------------------------------------------------------
-*/
 const getAirlines = async () => {
   const url = `${process.env.DUFFEL_BASE_URL}/airlines`;
   const token = process.env.DUFFEL_ACCESS_TOKEN;
@@ -230,7 +199,6 @@ export default {
   getAirlines,
   getAirports,
   createOfferRequest,
-  createOffer,
   createOrder,
   getOrders,
   getOrder,
