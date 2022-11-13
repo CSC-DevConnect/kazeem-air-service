@@ -60,8 +60,8 @@ const getAirports = catchAsync(async (req: Request, res: Response) => {
 |------------------------------------------------------------------------
 */
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  // const { offer_request_id, selected_offers } = req.query;
-  const flight = await flightService.createOrder(req.body);
+  const { passenger_id, selected_offers } = req.query;
+  const flight = await flightService.createOrder(req.body, selected_offers, passenger_id);
   res.status(httpStatus.CREATED).send({ flight });
 });
 

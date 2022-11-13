@@ -145,11 +145,11 @@ const getAirports = async (countryCode?: any) => {
 |------------------------------------------------------------------------
 */
 
-const createOrder = async (body) => {
+const createOrder = async (body, selected_offers, passenger_id) => {
   const { type, phone_number, email, born_on, title, gender, family_name, given_name } = body;
 
   const payload: any = {
-    selected_offers: ['off_0000APYWkzxbmFDjT2YfD7'],
+    selected_offers: [selected_offers],
     payments: [
       {
         type: 'balance',
@@ -166,7 +166,7 @@ const createOrder = async (body) => {
         gender,
         family_name,
         given_name,
-        id: 'pas_0000APYWkzd30gm2RGwFAE',
+        id: passenger_id,
       },
     ],
     type,
@@ -176,16 +176,10 @@ const createOrder = async (body) => {
     if (!order) {
       throw new Error('Invalid request');
     }
-
-    // console.log(order);
-    // const url = `${process.env.DUFFEL_BASE_URL}/orders/${order.data.id}`;
-    // const token = process.env.DUFFEL_ACCESS_TOKEN;
-
-    // const orders = await http.getRequest(url, token);
     return order;
   } catch (error: any) {
-    console.log(error);
-    throw new Error(error?.message);
+    console.log( error.errors[0].message );
+    throw new Error(error.errors[0].message);
   }
 };
 
