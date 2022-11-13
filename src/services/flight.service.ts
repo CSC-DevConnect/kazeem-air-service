@@ -146,44 +146,47 @@ const getAirports = async (countryCode?: any) => {
 */
 
 const createOrder = async (body) => {
-  // const { type, phone_number, email, born_on, title, gender, family_name, given_name } = body;
+  const { type, phone_number, email, born_on, title, gender, family_name, given_name } = body;
 
   const payload: any = {
-    "selected_offers": ["off_0000APYWkzxbmFDjT2YfD7"],
-  "payments": [
-    {
-      "type": "balance",
-      "currency": "USD",
-      "amount": "299.96"
-    }
-  ],
-  "passengers": [
-    {
-      "phone_number": "+44 2080160508",
-      "email": "mae@example.com",
-      "born_on": "1956-10-17",
-      "title": "ms",
-      "gender": "f",
-      "family_name": "Jemison",
-      "given_name": "Mae",
-      "id": "pas_0000APYWkzd30gm2RGwFAE"
-    }
-  ],
-  "type": "instant"
+    selected_offers: ['off_0000APYWkzxbmFDjT2YfD7'],
+    payments: [
+      {
+        type: 'balance',
+        currency: 'USD',
+        amount: '299.96',
+      },
+    ],
+    passengers: [
+      {
+        phone_number,
+        email,
+        born_on,
+        title,
+        gender,
+        family_name,
+        given_name,
+        id: 'pas_0000APYWkzd30gm2RGwFAE',
+      },
+    ],
+    type,
   };
+  try {
+    const order = await duffel.orders.create(payload);
+    if (!order) {
+      throw new Error('Invalid request');
+    }
 
-  const order = await duffel.orders.create(payload);
+    // console.log(order);
+    // const url = `${process.env.DUFFEL_BASE_URL}/orders/${order.data.id}`;
+    // const token = process.env.DUFFEL_ACCESS_TOKEN;
 
-  if (!order) {
-    throw new Error('Invalid request');
+    // const orders = await http.getRequest(url, token);
+    return order;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error?.message);
   }
-
-  console.log(order);
-  const url = `${process.env.DUFFEL_BASE_URL}/orders/${order.data.id}`;
-  const token = process.env.DUFFEL_ACCESS_TOKEN;
-
-  const orders = await http.getRequest(url, token);
-  return orders;
 };
 
 /*  
