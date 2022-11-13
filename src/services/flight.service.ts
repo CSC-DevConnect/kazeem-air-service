@@ -43,7 +43,8 @@ const createOfferRequest = async (body: any): Promise<any> => {
 |------------------------------------------------------------------------
 */
 const createTwoWayOfferRequest = async (body: any): Promise<any> => {
-  const { cabin_class, origin, destination, departure_date, return_origin, return_destination, return_departure_date } = body;
+  const { cabin_class, origin, destination, departure_date, return_origin, return_destination, return_departure_date } =
+    body;
   const payload: any = {
     return_offers: false,
     supplier_timeout: 20000,
@@ -145,78 +146,98 @@ const getAirports = async (countryCode?: any) => {
 */
 
 const createOrder = async (body) => {
-  const {payments, selected_offers, type, services, metadata} = body
+  // const { type, phone_number, email, born_on, title, gender, family_name, given_name } = body;
 
   const payload: any = {
-    type,
-    services,
-    selected_offers,
-    passengers: [{ type: 'adult' }],
-    payments,    
-    metadata
-  }
+    "selected_offers": ["off_0000APYWkzxbmFDjT2YfD7"],
+  "payments": [
+    {
+      "type": "balance",
+      "currency": "USD",
+      "amount": "299.96"
+    }
+  ],
+  "passengers": [
+    {
+      "phone_number": "+44 2080160508",
+      "email": "mae@example.com",
+      "born_on": "1956-10-17",
+      "title": "ms",
+      "gender": "f",
+      "family_name": "Jemison",
+      "given_name": "Mae",
+      "id": "pas_0000APYWkzd30gm2RGwFAE"
+    }
+  ],
+  "type": "instant"
+  };
 
-  console.log('payload', payload)
-
-  console.log('body', body)
-
-  const order = await duffel.orders.create(body)
+  const order = await duffel.orders.create(payload);
 
   if (!order) {
-    throw new Error('Invalid request')
+    throw new Error('Invalid request');
   }
 
-  console.log(order)
-  const url = `${process.env.DUFFEL_BASE_URL}/orders/${order.data.id}`
-  const token = process.env.DUFFEL_ACCESS_TOKEN
+  console.log(order);
+  const url = `${process.env.DUFFEL_BASE_URL}/orders/${order.data.id}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
 
-  const orders = await http.getRequest(url, token)
+  const orders = await http.getRequest(url, token);
   return orders;
-  }
+};
 
-  /*  
+/*  
 |-----------------------------------------------------------------------
 | List orders
 |------------------------------------------------------------------------
 */
-
 const getOrders = async () => {
-  const url = `${process.env.DUFFEL_BASE_URL}/orders`
-  const token = process.env.DUFFEL_ACCESS_TOKEN
+  const url = `${process.env.DUFFEL_BASE_URL}/orders`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
 
-  const orders = await http.getRequest(url, token)
-  return orders
-}
+  const orders = await http.getRequest(url, token);
+  return orders;
+};
 
-  /*  
+/*  
 |-----------------------------------------------------------------------
 | Get a single order
 |------------------------------------------------------------------------
 */
 
 const getOrder = async (id) => {
-  const url = `${process.env.DUFFEL_BASE_URL}/orders/${id}`
-  const token = process.env.DUFFEL_ACCESS_TOKEN
+  const url = `${process.env.DUFFEL_BASE_URL}/orders/${id}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
 
-  const order = await http.getRequest(url, token)
-  return order
-}
+  const order = await http.getRequest(url, token);
+  return order;
+};
 
-  /*  
+/*  
 |-----------------------------------------------------------------------
 | Update a single order
 |------------------------------------------------------------------------
 */
 
 const updateOrder = async (id, body) => {
-  const order = await getOrder(id)
- 
+  const order = await getOrder(id);
 
-  const r = Object.assign(order, body)
-   console.log('order', order)
-  console.log('result', r)
-  await order.save()
-  return order
-}
+  const r = Object.assign(order, body);
+  console.log('order', order);
+  console.log('result', r);
+  await order.save();
+  return order;
+};
 
-export default { getAirlines, getAirports, createOfferRequest, createOffer, createOrder, getOrders, getOrder, updateOrder, createTwoWayOfferRequest, getOfferRequests, };
+export default {
+  getAirlines,
+  getAirports,
+  createOfferRequest,
+  createOffer,
+  createOrder,
+  getOrders,
+  getOrder,
+  updateOrder,
+  createTwoWayOfferRequest,
+  getOfferRequests,
+};

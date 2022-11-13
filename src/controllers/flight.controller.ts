@@ -60,6 +60,7 @@ const getAirports = catchAsync(async (req: Request, res: Response) => {
 |------------------------------------------------------------------------
 */
 const createOrder = catchAsync(async (req: Request, res: Response) => {
+  // const { offer_request_id, selected_offers } = req.query;
   const flight = await flightService.createOrder(req.body);
   res.status(httpStatus.CREATED).send({ flight });
 });
@@ -94,4 +95,14 @@ const updateOrder = catchAsync(async (req: Request, res: Response) => {
   res.status(httpStatus.CREATED).send({ flight });
 });
 
-export default { getAirlines, getAirports, createOfferRequest, createOrder, getOrders, getOrder, updateOrder, createTwoWayOfferRequest, getOfferRequests };
+export default {
+  getAirlines,
+  getAirports,
+  createOfferRequest,
+  createOrder,
+  getOrders,
+  getOrder,
+  updateOrder,
+  createTwoWayOfferRequest,
+  getOfferRequests,
+};
