@@ -6,9 +6,10 @@ import userController from '../../controllers/user.controller';
 
 const router = express.Router();
 
+router.post('/register', validate(userValidation.createUser), userController.createUser);
+
 router
   .route('/')
-  .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
 router.route('/profile').get(auth('/getProfile'), validate(userValidation.getUser), userController.getProfile);
