@@ -9,9 +9,12 @@ class HttpRequest {
         data: { ...data },
         headers: {
           Authorization: `Bearer ${token}`,
+          'Accept-Encoding': 'gzip',
           'Content-Type': 'application/json',
           'Duffel-Version': 'beta',
         },
+        responseType: 'json',
+        decompress: true,
       });
       return response.data;
     } catch (error) {

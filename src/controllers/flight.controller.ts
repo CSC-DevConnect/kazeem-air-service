@@ -8,19 +8,29 @@ import { flightService } from '../services';
 | Get all airlines
 |------------------------------------------------------------------------
 */
-// const bookFlight = catchAsync(async (req: Request, res: Response) => {
-//   const flight = await flightService.bookFlight(req.body);
-//   res.status(httpStatus.CREATED).send({ flight });
-// });
+const createOfferRequest = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.createOfferRequest(req.body);
+  res.status(httpStatus.CREATED).send({ flight });
+});
 
 /*
 |-----------------------------------------------------------------------
 | Get all airlines
 |------------------------------------------------------------------------
 */
-const createOfferRequest = catchAsync(async (req: Request, res: Response) => {
-  const flight = await flightService.createOfferRequest(req.body);
+const createTwoWayOfferRequest = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.createTwoWayOfferRequest(req.body);
   res.status(httpStatus.CREATED).send({ flight });
+});
+
+/*
+|-----------------------------------------------------------------------
+| Get all airlines
+|------------------------------------------------------------------------
+*/
+const getOfferRequests = catchAsync(async (req: Request, res: Response) => {
+  const result = await flightService.getOfferRequests();
+  res.send(result);
 });
 
 /*
@@ -84,4 +94,4 @@ const updateOrder = catchAsync(async (req: Request, res: Response) => {
   res.status(httpStatus.CREATED).send({ flight });
 });
 
-export default { getAirlines, getAirports, createOfferRequest, createOrder, getOrders, getOrder, updateOrder };
+export default { getAirlines, getAirports, createOfferRequest, createOrder, getOrders, getOrder, updateOrder, createTwoWayOfferRequest, getOfferRequests };
