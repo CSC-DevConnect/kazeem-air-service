@@ -5,7 +5,7 @@ import { toJSON, paginate } from './plugins';
 // import roles from '../config/roles';
 
 interface IUser {
-  name: string;
+  fullName: string;
   email: string;
   password: string;
   country: string;
@@ -15,10 +15,10 @@ interface IUser {
   isEmailVerified: boolean;
 }
 
-interface IUser {
-  username: string;
-  hashedPassword: string;
-}
+// interface IUser {
+//   username: string;
+//   hashedPassword: string;
+// }
 
 interface IUserDocument extends IUser, Document {
   isPasswordMatch: (password: string) => Promise<boolean>;
@@ -29,7 +29,7 @@ interface IUserModel extends Model<IUserDocument> {
 }
 
 const userSchema = new mongoose.Schema<IUserDocument>({
-  name: {
+  fullName: {
     type: String,
     required: true,
     trim: true,
