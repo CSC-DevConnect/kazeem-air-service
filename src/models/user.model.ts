@@ -10,7 +10,6 @@ interface IUser {
   password: string;
   country: string;
   phoneNumber: string;
-  dateOfBirth: string;
   gender: string;
   isEmailVerified: boolean;
 }
@@ -62,10 +61,6 @@ const userSchema = new mongoose.Schema<IUserDocument>({
     type: String,
   },
   phoneNumber: {
-    type: String,
-    trim: true,
-  },
-  dateOfBirth: {
     type: String,
     trim: true,
   },
