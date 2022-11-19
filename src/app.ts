@@ -47,9 +47,9 @@ app.use(passport.initialize());
 passport.use('jwt', jwtStrategy.jwtStrategy);
 
 // limit repeated failed requests to auth endpoints
-if (config.env === 'production') {
-  app.use('/v1/auth');
-}
+// if (config.env === 'production') {
+//   app.use('/v1/auth');
+// }
 
 app.get("/", async (_req: Request, res: Response) => {
   res.send({ status: 200, message: "server up and running" });
