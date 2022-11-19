@@ -1,7 +1,7 @@
 import express, { Response, Request } from 'express';
 import helmet from 'helmet';
-// import xss from 'xss-clean';
-// import mongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
+import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 import cors from 'cors';
 import passport from 'passport';
@@ -31,9 +31,20 @@ app.use(express.json());
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req: Request, res: Response, next: any) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  //res.header("Content-type", "text/plain");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 // sanitize request data
-// app.use(xss());
-// app.use(mongoSanitize());
+app.use(xss());
+app.use(mongoSanitize());
 
 // gzip compression
 app.use(compression());
