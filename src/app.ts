@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Response, Request } from 'express';
 import helmet from 'helmet';
-import xss from 'xss-clean';
-import mongoSanitize from 'express-mongo-sanitize';
+// import xss from 'xss-clean';
+// import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 import cors from 'cors';
 import passport from 'passport';
@@ -32,8 +32,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // sanitize request data
-app.use(xss());
-app.use(mongoSanitize());
+// app.use(xss());
+// app.use(mongoSanitize());
 
 // gzip compression
 app.use(compression());
@@ -47,9 +47,13 @@ app.use(passport.initialize());
 passport.use('jwt', jwtStrategy.jwtStrategy);
 
 // limit repeated failed requests to auth endpoints
-// if (config.env === 'production') {
-//   app.use('/v1/auth');
-// }
+if (config.env === 'production') {
+  app.use('/v1/auth');
+}
+
+app.get("/", async (_req: Request, res: Response) => {
+  res.send({ status: 200, message: "server up and running" });
+});
 
 // v1 api routes
 app.use('/api/v1', routes);
