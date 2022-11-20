@@ -127,17 +127,17 @@ const getAirports = async (countryCode?: any) => {
 */
 
 const createOrder = async (body, selected_offers, passenger_id, userId) => {
-  const { type, phone_number, email, born_on, title, gender, family_name, given_name, amount } = body;
+  const { type, phone_number, email, born_on, title, gender, family_name, given_name,} = body;
 
   const payload: any = {
     selected_offers: [selected_offers],
-    payments: [
-      {
-        type: 'balance',
-        currency: 'USD',
-        amount,
-      },
-    ],
+    // payments: [
+    //   {
+    //     type: 'balance',
+    //     currency: 'USD',
+    //     amount,
+    //   },
+    // ],
     passengers: [
       {
         phone_number,
