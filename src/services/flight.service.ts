@@ -86,6 +86,18 @@ const getOfferRequests = async () => {
 
 /*
 |-----------------------------------------------------------------------
+| List offer requests
+|------------------------------------------------------------------------
+*/
+const getSingleOfferRequests = async (id: string) => {
+  const url = `${process.env.DUFFEL_BASE_URL}/offer_requests/${id}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const offerRequests = await http.getRequest(url, token);
+  return offerRequests;
+};
+
+/*
+|-----------------------------------------------------------------------
 | Get all airlines
 |------------------------------------------------------------------------
 */
@@ -115,7 +127,7 @@ const getAirports = async (countryCode?: any) => {
 */
 
 const createOrder = async (body, selected_offers, passenger_id) => {
-  const { type, phone_number, email, born_on, title, gender, family_name, given_name } = body;
+  const { type, phone_number, email, born_on, title, gender, family_name, given_name, user_id, offer_amount } = body;
 
   const payload: any = {
     selected_offers: [selected_offers],
@@ -123,7 +135,7 @@ const createOrder = async (body, selected_offers, passenger_id) => {
       {
         type: 'balance',
         currency: 'USD',
-        amount: '299.96',
+        amount: offer_amount,
       },
     ],
     passengers: [
@@ -139,6 +151,9 @@ const createOrder = async (body, selected_offers, passenger_id) => {
       },
     ],
     type,
+    metadata: {
+      user_id
+    },
   };
   try {
     const order = await duffel.orders.create(payload);
@@ -147,7 +162,7 @@ const createOrder = async (body, selected_offers, passenger_id) => {
     }
     return order;
   } catch (error: any) {
-    console.log( error.errors[0] );
+    console.log(error.errors[0]);
     throw new Error(error.errors[0].message);
   }
 };
@@ -203,4 +218,5 @@ export default {
   updateOrder,
   createTwoWayOfferRequest,
   getOfferRequests,
+  getSingleOfferRequests,
 };

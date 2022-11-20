@@ -42,7 +42,7 @@ if (process.argv.length < 3) {
 const ownPath = process.cwd();
 const folderName = process.argv[2];
 const appPath = path.join(ownPath, folderName);
-const repo = 'https://github.com/hagopj13/node-express-boilerplate.git';
+const repo = 'https://github.com/CSC-DevConnect/kazeem-air-service';
 
 // Check if directory already exists
 try {
@@ -89,7 +89,7 @@ async function setup() {
     fs.unlinkSync(path.join(appPath, 'CHANGELOG.md'));
     fs.unlinkSync(path.join(appPath, 'CODE_OF_CONDUCT.md'));
     fs.unlinkSync(path.join(appPath, 'CONTRIBUTING.md'));
-    fs.unlinkSync(path.join(appPath, 'bin', 'createNodejsApp.js'));
+    fs.unlinkSync(path.join(appPath, 'bin', 'createNodejsApp.ts'));
     fs.rmdirSync(path.join(appPath, 'bin'));
     if (!useYarn) {
       fs.unlinkSync(path.join(appPath, 'yarn.lock'));

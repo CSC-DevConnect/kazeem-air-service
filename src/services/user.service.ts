@@ -4,9 +4,9 @@ import User from '../models/user.model';
 import ApiError from '../utils/ApiError';
 
 const createUser = async (userBody: any): Promise<any> => {
-  // if (await User.isEmailTaken(userBody.email)) {
-  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  // }
+  if (await User.isEmailTaken(userBody.email)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  }
   return User.create(userBody);
 };
 

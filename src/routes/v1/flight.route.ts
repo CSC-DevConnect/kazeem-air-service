@@ -12,5 +12,6 @@ router.route("/orders").post(flightController.createOrder).get(flightController.
 router.route("/orders/:id").get(flightController.getOrder).patch(flightController.updateOrder)
 router.post('/two_way_offer', flightController.createTwoWayOfferRequest);
 router.get('/offer_requests', flightController.getOfferRequests);
+router.get('/offer_request/:id', flightController.getSingleOfferRequests);
 
 export default router;

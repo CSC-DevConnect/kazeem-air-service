@@ -28,6 +28,16 @@ const createTwoWayOfferRequest = catchAsync(async (req: Request, res: Response) 
 | Get all airlines
 |------------------------------------------------------------------------
 */
+const getSingleOfferRequests = catchAsync(async (req: Request, res: Response) => {
+  const flight = await flightService.getSingleOfferRequests(req.params.id);
+  res.status(httpStatus.CREATED).send({ flight });
+});
+
+/*
+|-----------------------------------------------------------------------
+| Get all airlines
+|------------------------------------------------------------------------
+*/
 const getOfferRequests = catchAsync(async (req: Request, res: Response) => {
   const result = await flightService.getOfferRequests();
   res.send(result);
@@ -105,4 +115,5 @@ export default {
   updateOrder,
   createTwoWayOfferRequest,
   getOfferRequests,
+  getSingleOfferRequests,
 };

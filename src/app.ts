@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Response, Request } from 'express';
 import helmet from 'helmet';
 import xss from 'xss-clean';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -47,9 +47,13 @@ app.use(passport.initialize());
 passport.use('jwt', jwtStrategy.jwtStrategy);
 
 // limit repeated failed requests to auth endpoints
-if (config.env === 'production') {
-  app.use('/v1/auth');
-}
+// if (config.env === 'production') {
+//   app.use('/v1/auth');
+// }
+
+app.get("/", async (_req: Request, res: Response) => {
+  res.send({ status: 200, message: "server up and running" });
+});
 
 // v1 api routes
 app.use('/api/v1', routes);

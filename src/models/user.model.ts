@@ -1,18 +1,34 @@
-import mongoose from 'mongoose';
+import mongoose, { Model} from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import { toJSON, paginate } from './plugins';
 // import roles from '../config/roles';
 
-interface UserDoc extends Document {
-  name: string;
+interface IUser {
+  fullName: string;
   email: string;
   password: string;
+  country: string;
+  phoneNumber: string;
+  gender: string;
   isEmailVerified: boolean;
 }
 
-const userSchema = new mongoose.Schema<UserDoc>({
-  name: {
+// interface IUser {
+//   username: string;
+//   hashedPassword: string;
+// }
+
+interface IUserDocument extends IUser, Document {
+  isPasswordMatch: (password: string) => Promise<boolean>;
+}
+
+interface IUserModel extends Model<IUserDocument> {
+  isEmailTaken: (username: string) => Promise<boolean>;
+}
+
+const userSchema = new mongoose.Schema<IUserDocument>({
+  fullName: {
     type: String,
     required: true,
     trim: true,
@@ -41,11 +57,16 @@ const userSchema = new mongoose.Schema<UserDoc>({
     },
     private: true, // used by the toJSON plugin
   },
-  // role: {
-  //   type: String,
-  //   enum: roles,
-  //   default: 'user',
-  // },
+  country: {
+    type: String,
+  },
+  phoneNumber: {
+    type: String,
+    trim: true,
+  },
+  gender: {
+    type: String,
+  },
   isEmailVerified: {
     type: Boolean,
     default: false,
@@ -56,6 +77,9 @@ const userSchema = new mongoose.Schema<UserDoc>({
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
 
+// userSchema.static('myStaticMethod', function myStaticMethod() {
+//   return 42;
+// });
 userSchema.statics.isEmailTaken = async function (email: string, excludeUserId: any): Promise<boolean> {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
   return !!user;
@@ -76,6 +100,6 @@ userSchema.pre('save', async function (next) {
 /**
  * @typedef User
  */
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model<IUserDocument, IUserModel>('User', userSchema);
 
 export default User;

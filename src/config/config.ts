@@ -36,7 +36,7 @@ export default {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   mongoose: {
-    url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
+    url: "mongodb+srv://olashina:quadri201@database.htej6uc.mongodb.net/?retryWrites=true&w=majority",
     options: {
       useCreateIndex: true,
       useNewUrlParser: true,
