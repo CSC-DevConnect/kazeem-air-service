@@ -162,7 +162,7 @@ const createOrder = async (body, selected_offers, passenger_id, userId) => {
     }
     return order;
   } catch (error: any) {
-    console.log(error.errors[0]);
+    console.log(error.errors);
     throw new Error(error.errors[0].message);
   }
 };
