@@ -55,8 +55,8 @@ const createTwoWayOfferRequest = async (body: any): Promise<any> => {
         departure_date,
       },
       {
-        origin: return_origin,
-        destination: return_destination,
+        origin: return_destination,
+        destination: return_origin,
         departure_date: return_departure_date,
       },
     ],
@@ -126,8 +126,8 @@ const getAirports = async (countryCode?: any) => {
 |------------------------------------------------------------------------
 */
 
-const createOrder = async (body, selected_offers, passenger_id) => {
-  const { type, phone_number, email, born_on, title, gender, family_name, given_name, user_id, offer_amount } = body;
+const createOrder = async (body, selected_offers, passenger_id, userId) => {
+  const { type, phone_number, email, born_on, title, gender, family_name, given_name, offer_amount } = body;
 
   const payload: any = {
     selected_offers: [selected_offers],
@@ -152,7 +152,7 @@ const createOrder = async (body, selected_offers, passenger_id) => {
     ],
     type,
     metadata: {
-      user_id
+      userId
     },
   };
   try {
