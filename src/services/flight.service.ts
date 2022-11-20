@@ -188,9 +188,7 @@ const getOrder = async (id) => {
 const updateOrder = async (id, body) => {
   const order = await getOrder(id);
 
-  const r = Object.assign(order, body);
-  console.log('order', order);
-  console.log('result', r);
+  Object.assign(order, body);
   await order.save();
   return order;
 };
