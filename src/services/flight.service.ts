@@ -86,6 +86,18 @@ const getOfferRequests = async () => {
 
 /*
 |-----------------------------------------------------------------------
+| List offer requests
+|------------------------------------------------------------------------
+*/
+const getSingleOfferRequests = async (id: string) => {
+  const url = `${process.env.DUFFEL_BASE_URL}/offer_requests/${id}`;
+  const token = process.env.DUFFEL_ACCESS_TOKEN;
+  const offerRequests = await http.getRequest(url, token);
+  return offerRequests;
+};
+
+/*
+|-----------------------------------------------------------------------
 | Get all airlines
 |------------------------------------------------------------------------
 */
@@ -205,4 +217,5 @@ export default {
   updateOrder,
   createTwoWayOfferRequest,
   getOfferRequests,
+  getSingleOfferRequests,
 };
