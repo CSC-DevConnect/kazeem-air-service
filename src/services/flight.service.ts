@@ -140,6 +140,7 @@ const createOrder = async (body, selected_offers, passenger_id, userId) => {
     // ],
     passengers: [
       {
+        type: "adult",
         phone_number,
         email,
         born_on,
